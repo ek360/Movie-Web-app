@@ -1,5 +1,4 @@
-from movie.domain.movie import Movie
-from movie.domain.review import Review
+
 
 class User:
     def __init__(self,user_name,password):
@@ -16,15 +15,15 @@ class User:
     @property
     def password(self):
         return self.__password
-        
+
     @property
     def watched_movies(self):
         return self.__watched_movies
-        
+
     @property
     def reviews(self):
-        return self.__reviews
-        
+        return iter(self.__reviews)
+
     @property
     def time_spent_watching_movies_minutes(self):
         return self.__time_spent_watching_movies_minutes

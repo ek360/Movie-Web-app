@@ -1,39 +1,40 @@
 from datetime import datetime
 
-from movie.domain.movie import Movie
+from movie.domain.user import User
+
 
 class Review:
-    def __init__(self,movie,review_text,rating):
+    def __init__(self, user, movie, review, timestamp):
+        self.__user: User = user
         self.__movie = movie
-        self.__review_text = review_text
-        if rating > 0 and rating < 11:
-            self.__rating = rating
-        else:
-            self.__rating = None
-        self.__timestamp = datetime.today()
-        
+        self.__review: Review = review
+        self.__timestamp: datetime = timestamp
+
+    @property
+    def user(self) -> User:
+        return self.__user
+
     @property
     def movie(self):
         return self.__movie
-        
+
     @property
-    def review_text(self):
-        return self.__review_text
-        
+    def review(self) -> str:
+        return self.__review
+
     @property
-    def rating(self):
-        return self.__rating
-        
-    @property
-    def timestamp(self):
+    def timestamp(self) -> datetime:
         return self.__timestamp
-        
-        
-    def __repr__(self):
-        return f"<Movie {self.__movie}, Timestamp {self.__timestamp}>"
-        
+
     def __eq__(self, other):
-        if self.__movie == other.__movie and self.__review_text == other.__review_text and self.__rating == other.__rating and self.__timestamp == other.__timestamp:
-            return True
-        else:
+        if not isinstance(other, Review):
             return False
+        return other.__user == self.__user and other.__movie == self.__movie and other.__review == self.__review and other.__timestamp == self.__timestamp
+
+
+def make_review(review_text, user, movie, timestamp: datetime = datetime.today()):
+    review = Review(user, movie, review_text, timestamp)
+    user.add_review(review)
+    movie.add_review(review)
+    return review
+

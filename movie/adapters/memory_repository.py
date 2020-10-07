@@ -7,12 +7,14 @@ from bisect import bisect, bisect_left, insort_left
 
 from werkzeug.security import generate_password_hash
 
-from movie.adapters.repository import AbstractRepository
+from movie.adapters.repository import AbstractRepository, RepositoryException
 from movie.domain.movie import Movie
 from movie.domain.actor import Actor
 from movie.domain.genre import Genre
 from movie.domain.director import Director
 from movie.domain.user import User
+from movie.domain.review import Review, make_review
+
 
 class MemoryRepository(AbstractRepository):
 
@@ -23,6 +25,7 @@ class MemoryRepository(AbstractRepository):
         self.__dataset_of_genres = []
         self.__dataset_of_movies_rank = dict()
         self.__users = []
+        self.__reviews = []
 
     def add_actor(self, actor: Actor):
         self.__dataset_of_actors.append(actor)
@@ -34,12 +37,13 @@ class MemoryRepository(AbstractRepository):
         self.__dataset_of_directors.append(director)
 
     def get_director(self, director) -> Director:
-        return next((director_holder for director_holder in self.__dataset_of_directors if director_holder.director == director), None)
+        return next((director_holder for director_holder in self.__dataset_of_directors if
+                     director_holder.director == director), None)
 
     def add_genre(self, genre: Genre):
         self.__dataset_of_genres.append(genre)
 
-    def get_genre(self, genre) ->Genre:
+    def get_genre(self, genre) -> Genre:
         return next((genre_holder for genre_holder in self.__dataset_of_genres if genre_holder.genre == genre), None)
 
     def add_movie(self, movie: Movie):
@@ -77,8 +81,8 @@ class MemoryRepository(AbstractRepository):
         previous_rank = None
 
         try:
-            if movie.rank -1 > 0:
-                previous_rank = movie.rank -1
+            if movie.rank - 1 > 0:
+                previous_rank = movie.rank - 1
         except ValueError:
             pass
 
@@ -107,6 +111,12 @@ class MemoryRepository(AbstractRepository):
             return ranking
         raise ValueError
 
+    def add_review(self, review):
+        super().add_review(review)
+        self.__reviews.append(review)
+
+    def get_reviews(self):
+        return self.__reviews
 
 
 def read_csv_file(filename: str):
@@ -119,10 +129,9 @@ def read_csv_file(filename: str):
             row = [item.strip() for item in row]
             yield row
 
+
 def load_movies(data_path: str, repo: MemoryRepository):
-
-    for data_row in read_csv_file(os.path.join(data_path,'Data1000Movies.csv')):
-
+    for data_row in read_csv_file(os.path.join(data_path, 'Data1000Movies.csv')):
         movie_rank = int(data_row[0])
 
         movie = Movie(
@@ -135,10 +144,11 @@ def load_movies(data_path: str, repo: MemoryRepository):
             rating=float(data_row[8]),
             metascore=data_row[11]
         )
-        #add genre and actors later maybe.
+        # add genre and actors later maybe.
         repo.add_movie(movie)
 
-def load_users(data_path:  str, repo: MemoryRepository):
+
+def load_users(data_path: str, repo: MemoryRepository):
     users = dict()
     for data_row in read_csv_file(os.path.join(data_path, 'users.csv')):
         user = User(
@@ -150,6 +160,18 @@ def load_users(data_path:  str, repo: MemoryRepository):
 
     return users
 
-def populate(data_path,repo):
-    load_movies(data_path,repo)
-    load_users(data_path,repo)
+def load_reviews(data_path: str, repo: MemoryRepository, users):
+    for data_row in read_csv_file(os.path.join(data_path, 'reviews.csv')):
+        review = make_review(
+            review_text=data_row[3],
+            user=users[data_row[1]],
+            movie=repo.get_movie(int(data_row[2])),
+            timestamp=datetime.fromisoformat((data_row[4]))
+        )
+    repo.add_review(review)
+
+
+def populate(data_path, repo):
+    load_movies(data_path, repo)
+    users = load_users(data_path, repo)
+    load_reviews(data_path, repo, users)

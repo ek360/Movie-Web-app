@@ -33,6 +33,23 @@
         <span>Duration:</span>
             {{movies.runtime}}min
         </div>
+        <div style="float:right">
+            {% if movies.reviews|length > 0 and movies.rank != show_reviews_for_movies %}
+                <button class="btn-general" onclick="location.href='{{ movies.view_review_url }}'">{{ movies.reviews|length }} reviews</button>
+            {% endif %}
+            <button class="btn-general" onclick="location.href='{{ movies.add_review_url }}'">Comment</button>
+        </div>
+        {% if movies.rank == show_reviews_for_movies %}
+        <div>
+            <br>
+            <h3>Comments:</h3>
+            {% for review in movies.reviews %}
+                <p>{{review.review_text}}</p>
+                <p>{{review.username}}, {{review.timestamp}}</p>
+                <br>
+            {% endfor %}
+        </div>
+        {% endif %}
     </article>
 
      <footer>

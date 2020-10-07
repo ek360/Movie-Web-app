@@ -231,3 +231,6 @@ input[type='submit']:hover {
     fill: currentColor;
     overflow: hidden;
 }
+.grey{
+    background-color: grey;
+}

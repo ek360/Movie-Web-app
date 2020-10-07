@@ -7,6 +7,13 @@ from movie.domain.director import Director
 
 repo_instance = None
 
+
+class RepositoryException(Exception):
+
+    def __init__(self, message=None):
+        pass
+
+
 class AbstractRepository(abc.ABC):
     @abc.abstractmethod
     def add_actor(self, actor: Actor):
@@ -29,7 +36,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_genre(self, genre) ->Genre:
+    def get_genre(self, genre) -> Genre:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -66,4 +73,15 @@ class AbstractRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_user(self, username):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_review(self, review):
+        if review.user is None or review not in review.user.reviews:
+            raise RepositoryException('Comment not correctly attached to a User')
+        if review.movie is None or review not in review.movie.reviews:
+            raise RepositoryException('Comment not correctly attached to an Movie')
+
+    @abc.abstractmethod
+    def get_reviews(self):
         raise NotImplementedError

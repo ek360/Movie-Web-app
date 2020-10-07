@@ -8,25 +8,18 @@
     </header>
 
     <div style="clear:both">
-        <a href="{{article.hyperlink}}" target="_blank">
-            <img src={{article.image_hyperlink}} alt="article image">
-        </a>
-        <h2>{{article.title}}</h2>
-        <p>{{article.first_para}}</p>
-        <div style="float:left">
-            {% for tag in article.tags %}
-            <button class="btn-general-disabled" disable>{{ tag.name }}</button>
-            {% endfor %}
-        </div>
+
+        <h2>{{movies.title}}</h2>
+        <p>{{movies.description}}</p>
         <div class="form-wrapper">
             <form action="{{handler_url}}" method="post">
-                {{form.article_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+                {{form.movie_rank}} <!-- Need to include this hidden field as it tracks the article being commented. -->
                 {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
                 <br>
-                <div class ="form-field">{{form.comment.label}} </br>{{form.comment(size = 100, placeholder="type your comment", class="textarea", cols="50", rows="6", wrap="hard")}}
-                    {% if form.comment.errors %}
+                <div class ="form-field">{{form.review.label}} </br>{{form.review(size = 100, placeholder="type your comment", class="textarea", cols="50", rows="6", wrap="hard")}}
+                    {% if form.review.errors %}
                         <ul class="errors">
-        	            {% for error in form.comment.errors %}
+        	            {% for error in form.review.errors %}
         		            <li>{{error}}</li>
                         {% endfor %}
                         </ul>
@@ -36,8 +29,10 @@
             </form>
         </div>
         <div style="clear:both">
-            {% for comment in article.comments %}
-                <p>{{comment.comment_text}}, by {{comment.username}}, {{comment.timestamp}}</p>
+                {% for review in movies.reviews %}
+                <p>{{review.review_text}}</p>
+                <p>{{review.username}}, {{review.timestamp}}</p>
+                <br>
             {% endfor %}
         </div>
     </article>

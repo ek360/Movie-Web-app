@@ -5,6 +5,25 @@ from movie.domain.movie import Movie
 from movie.domain.actor import Actor
 from movie.domain.genre import Genre
 from movie.domain.director import Director
+from movie.domain.review import make_review
+
+class NonExistentArticleException(Exception):
+    pass
+
+
+class UnknownUserException(Exception):
+    pass
+
+
+def add_comment(movie_rank, review_text, username, repo):
+    movie = repo.get_movie(movie_rank)
+    if movie is None:
+        raise NonExistentArticleException
+    user = repo.get_user(username)
+    if user is None:
+        raise UnknownUserException
+    comment = make_review(review_text, user, movie)
+    repo.add_review(comment)
 
 def get_first_movie(repo):
     movie = repo.get_first_movie()
@@ -43,8 +62,21 @@ def movie_to_dict(movie):
         'director': movie.director,
         "runtime": movie.runtime_minutes,
         "rating": movie.rating,
-        "metascore": movie.metascore}
+        "metascore": movie.metascore,
+        "reviews": reviews_to_dict(movie.reviews)}
     return movie_dict
 
 def movies_to_dict(movies):
     return [movie_to_dict(movie) for movie in movies]
+
+def review_to_dict(review):
+    review_dict = {
+        'username': review.user.user_name,
+        'movie_rank': review.movie.rank,
+        'review_text': review.review,
+        'timestamp': review.timestamp
+    }
+    return review_dict
+
+def reviews_to_dict(reviews):
+    return[review_to_dict(review) for review in reviews]
