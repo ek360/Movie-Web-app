@@ -37,7 +37,7 @@
             {% if movies.reviews|length > 0 and movies.rank != show_reviews_for_movies %}
                 <button class="btn-general" onclick="location.href='{{ movies.view_review_url }}'">{{ movies.reviews|length }} reviews</button>
             {% endif %}
-            <button class="btn-general" onclick="location.href='{{ movies.add_review_url }}'">Comment</button>
+            <button class="btn-general" onclick="location.href='{{ movies.add_review_url }}'">Write a review</button>
         </div>
         {% if movies.rank == show_reviews_for_movies %}
         <div>
