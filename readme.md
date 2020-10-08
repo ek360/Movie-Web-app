@@ -1,4 +1,4 @@
-# COVID-19 Web Application
+# Movie browsing Web Application
 
 ## Description
 
