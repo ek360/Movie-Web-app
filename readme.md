@@ -4,12 +4,13 @@
 
 A Web application that demonstrates use of Python's Flask framework. The application makes use of libraries such as the Jinja templating library and WTForms. Architectural design patterns and principles including Repository, Dependency Inversion and Single Responsibility have been used to design the application. The application uses Flask Blueprints to maintain a separation of concerns between application functions. Testing includes unit and end-to-end testing using the pytest tool. 
 
+The Movie web app has functionalities of user authentication(registering, login, logout), commenting and browsing movies by their ranking.
 ## Installation
 
 **Installation via requirements.txt**
 
 ```shell
-$ cd COMPSCI-235
+$ cd Movie-Web-app
 $ py -3 -m venv venv
 $ venv\Scripts\activate
 $ pip install -r requirements.txt
@@ -21,7 +22,7 @@ When using PyCharm, set the virtual environment using 'File'->'Settings' and sel
 
 **Running the application**
 
-From the *COMPSCI-235* directory, and within the activated virtual environment (see *venv\Scripts\activate* above):
+From the *Movie-Web-app* directory, and within the activated virtual environment (see *venv\Scripts\activate* above):
 
 ````shell
 $ flask run
@@ -30,7 +31,7 @@ $ flask run
 
 ## Configuration
 
-The *COMPSCI-235/.env* file contains variable settings. They are set with appropriate values.
+The *Movie-Web-app/.env* file contains variable settings. They are set with appropriate values.
 
 * `FLASK_APP`: Entry point of the application (should always be `wsgi.py`).
 * `FLASK_ENV`: The environment in which to run the application (either `development` or `production`).
@@ -41,7 +42,7 @@ The *COMPSCI-235/.env* file contains variable settings. They are set with approp
 
 ## Testing
 
-Testing requires that file *COMPSCI-235/tests/conftest.py* be edited to set the value of `TEST_DATA_PATH`. You should set this to the absolute path of the *COMPSCI-235/tests/data* directory. 
+Testing requires that file *Movie-Web-app/tests/conftest.py* be edited to set the value of `TEST_DATA_PATH`. You should set this to the absolute path of the *COMPSCI-235/tests/data* directory. 
 
 E.g. 
 
