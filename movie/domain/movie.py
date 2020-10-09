@@ -128,12 +128,12 @@ class Movie:
         return f"<Movie {self.__title}, {self.__year},{self.__rank}>"
 
     def __eq__(self, other):
-        return self.__title == other.__title and self.__year == other.__year
+        return self.__rank == other.__rank
 
     def __lt__(self, other):
-        if self.__title < other.__title:
+        if self.__rank < other.__rank:
             return True
-        elif self.__title > other.__title:
+        elif self.__rank > other.__rank:
             return False
         else:
             if self.__year < other.__year:

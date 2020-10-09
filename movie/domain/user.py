@@ -29,7 +29,7 @@ class User:
         return self.__time_spent_watching_movies_minutes
         
     def __repr__(self):
-        return f"<User {self.__user_name}>"
+        return f"<User {self.__user_name} {self.__password}>"
         
     def __eq__(self, other):
         if self.__user_name == other.__user_name:
