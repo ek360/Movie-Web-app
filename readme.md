@@ -1,4 +1,4 @@
-# Movie browsing Web Application
+# Movie browsing Web Application(Submission for before 11/10/20)
 
 ## Description
 The Movie web app has functionalities of user authentication(registering, login, logout), commenting and browsing movies by their ranking.
