@@ -1,10 +1,10 @@
 # Movie browsing Web Application
 
 ## Description
+The Movie web app has functionalities of user authentication(registering, login, logout), commenting and browsing movies by their ranking.
 
 A Web application that demonstrates use of Python's Flask framework. The application makes use of libraries such as the Jinja templating library and WTForms. Architectural design patterns and principles including Repository, Dependency Inversion and Single Responsibility have been used to design the application. The application uses Flask Blueprints to maintain a separation of concerns between application functions. Testing includes unit and end-to-end testing using the pytest tool. 
 
-The Movie web app has functionalities of user authentication(registering, login, logout), commenting and browsing movies by their ranking.
 ## Installation
 
 **Installation via requirements.txt**
@@ -16,7 +16,7 @@ $ venv\Scripts\activate
 $ pip install -r requirements.txt
 ```
 
-When using PyCharm, set the virtual environment using 'File'->'Settings' and select 'Project:COMPSCI-235' from the left menu. Select 'Project Interpreter', click on the gearwheel button and select 'Add'. Click the 'Existing environment' radio button to select the virtual environment. 
+When using PyCharm, set the virtual environment using 'File'->'Settings' and select 'Project:Movie-Web-app' from the left menu. Select 'Project Interpreter', click on the gearwheel button and select 'Add'. Click the 'Existing environment' radio button to select the virtual environment. 
 
 ## Execution
 
@@ -42,15 +42,15 @@ The *Movie-Web-app/.env* file contains variable settings. They are set with appr
 
 ## Testing
 
-Testing requires that file *Movie-Web-app/tests/conftest.py* be edited to set the value of `TEST_DATA_PATH`. You should set this to the absolute path of the *COMPSCI-235/tests/data* directory. 
+Testing requires that file *Movie-Web-app/tests/conftest.py* be edited to set the value of `TEST_DATA_PATH`. You should set this to the absolute path of the *Movie-Web-app/tests/data* directory. 
 
 E.g. 
 
-`TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'ian', 'Documents', 'Python dev', 'COVID-19', 'tests', 'data')`
+`TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'ian', 'Documents', 'Python dev', 'Movie-Web-app', 'tests', 'data')`
 
 assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.sep ensures use of the correct platform path separator):
 
-`C:\Users\ian\Documents\python-dev\COVID-19\tests\data`
+`C:\Users\ian\Documents\python-dev\Movie-Web-app\tests\data`
 
 You can then run tests from within PyCharm.
 
