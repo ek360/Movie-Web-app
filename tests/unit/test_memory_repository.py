@@ -2,9 +2,14 @@ from datetime import date, datetime
 from typing import List
 
 import pytest
+from movie.domain.user import User
+from movie.domain.actor import Actor
+from movie.domain.director import Director
+from movie.domain.genre import Genre
+from movie.domain.movie import Movie
+from movie.domain.review import Review, make_review
 
-from covid.domain.model import User, Article, Tag, Comment, make_comment
-from covid.adapters.repository import RepositoryException
+from movie.adapters.repository import RepositoryException
 
 
 def test_repository_can_add_a_user(in_memory_repo):
