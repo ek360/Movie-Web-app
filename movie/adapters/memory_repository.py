@@ -75,6 +75,8 @@ class MemoryRepository(AbstractRepository):
         return movie
 
     def get_movie_by_rank(self, target_rank):
+        if target_rank > len(self.__dataset_of_movies):
+            raise KeyError
         return [self.__dataset_of_movies_rank[target_rank]]
 
     def get_rank_of_previous_movie(self, movie):
@@ -117,6 +119,9 @@ class MemoryRepository(AbstractRepository):
 
     def get_reviews(self):
         return self.__reviews
+
+    def get_number_of_movies(self):
+        return len(self.__dataset_of_movies)
 
 
 def read_csv_file(filename: str):

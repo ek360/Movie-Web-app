@@ -15,7 +15,7 @@ class UnknownUserException(Exception):
     pass
 
 
-def add_comment(movie_rank, review_text, username, repo):
+def add_review(movie_rank, review_text, username, repo):
     movie = repo.get_movie(movie_rank)
     if movie is None:
         raise NonExistentArticleException
@@ -52,6 +52,13 @@ def get_movie_by_rank(rank,repo):
 
         movies_ranked = movies_to_dict(movie)
     return movies_ranked, previous_movie, next_movie
+
+def get_review_for_movie(rank,repo):
+    movie = repo.get_movie(rank)
+
+    if movie is None:
+        raise NonExistentArticleException
+    return reviews_to_dict(movie.reviews)
 
 def movie_to_dict(movie):
     movie_dict = {

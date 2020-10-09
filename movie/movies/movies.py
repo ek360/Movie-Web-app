@@ -78,7 +78,7 @@ def review_on_movie():
 
     if form.validate_on_submit():
         movie_rank = int(form.movie_rank.data)
-        services.add_comment(movie_rank, form.review.data, username, repo.repo_instance)
+        services.add_review(movie_rank, form.review.data, username, repo.repo_instance)
         movie = services.get_movie(movie_rank,repo.repo_instance)
         return redirect(url_for('movies_bp.movies', rank=movie['rank'], view_reviews_for=movie['rank']))
 
